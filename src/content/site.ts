@@ -27,7 +27,7 @@ export const site = {
    * something she did not write. Her X bio is the other half: a family act,
    * commissions, and the art hashtag.
    */
-  bio: "Virtual YouTuber Indonesia. Isekai, love witch, dan suka live bareng.",
+  bio: "Virtual YouTuber Indonesia. Isekai, love witch.",
   /**
    * Production origin. The site is served from its own subdomain, so the origin
    * and the site URL are the same thing. Kept in sync with index.html,
@@ -35,7 +35,7 @@ export const site = {
    */
   url: "https://kanatareina.vtube-info.xyz",
   locale: "id_ID",
-  avatar: "/media/avatar-youtube.webp",
+  avatar: "/og-image.png",
   /**
    * Alt text for the channel avatar.
    *
@@ -130,7 +130,6 @@ export const hashtags = [
  * from the creator.
  */
 export const series = [
-  { name: "COVER", kind: "Cover" },
   { name: "Pajama Night", kind: "Obrolan" },
   { name: "REIVIEW SET UP", kind: "Review" },
   { name: "ONCAM ASMR", kind: "ASMR" },

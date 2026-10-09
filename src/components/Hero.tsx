@@ -82,7 +82,7 @@ export function Hero() {
             />
           </div>
           <figcaption className="mt-4 text-sm text-fg-subtle">
-            Foto profil dari kanal YouTube. Gambar milik kreator.
+            Gambar milik kreator.
           </figcaption>
         </motion.figure>
       </div>
