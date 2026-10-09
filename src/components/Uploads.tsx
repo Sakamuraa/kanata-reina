@@ -48,18 +48,32 @@ export function Uploads() {
   });
 
   /*
+   * A running broadcast does not pass through the window, it goes around it.
+   *
+   * The window is read off the age label, and a live stream does not have one:
+   * YouTube puts a viewer count in that row instead, so `ageLabel` returns null
+   * and the filter above drops it. That is exactly how /konten could show a Live
+   * badge off the same `streams` array while this section — which also knows
+   * `live` is true and says so in its own heading — showed nothing but the last
+   * finished broadcast.
+   *
+   * So live entries are pulled out ahead of the filter and placed first, and the
+   * window keeps only what is not already there. Deduped by the live flag itself,
+   * so a broadcast that is both live and recent is listed once.
+   */
+  const liveItems = streams.filter((item) => item.live);
+  const withinWindow = [...liveItems, ...recent.filter((item) => !item.live)];
+
+  /*
    * Never an empty shelf.
    *
-   * The window is a day, and Mizu does not stream every day, so most days this
-   * filtered to nothing and the section rendered as a heading over blank space
-   * with a note pointing elsewhere — a worse answer than showing the last thing
-   * she did, however long ago. So if the window comes up empty the newest
-   * broadcast is shown instead, with its real age on it.
-   *
-   * The fallback is the newest entry, so when she goes live it *is* the live one:
-   * it passes the window on its own and this branch stops being taken.
+   * The window is a day, and Reina does not stream every day, so most days this
+   * comes up with neither a live stream nor anything inside the window. A heading
+   * over blank space with a note pointing elsewhere is a worse answer than
+   * showing the last thing she did, however long ago, so the newest broadcast
+   * stands in with its real age on it.
    */
-  const items = recent.length > 0 ? recent : streams.slice(0, 1);
+  const items = withinWindow.length > 0 ? withinWindow : streams.slice(0, 1);
 
   return (
     <section id="klip" aria-labelledby="uploads-heading" className="py-24 md:py-32">
@@ -197,7 +211,7 @@ function BroadcastCard({ item, fallbackIndex }: { item: ContentItem; fallbackInd
 
         <span className="min-w-0">
           {item.live && (
-            <span className="mb-1.5 inline-flex items-center gap-1.5 rounded-pill bg-cocoa px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-bg">
+            <span className="mb-1.5 inline-flex items-center gap-1.5 rounded-pill bg-ink px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-bg">
               {/* A real semantic state read from the channel, which is the one
                   case where a status dot belongs. */}
               <span className="relative flex size-2">
