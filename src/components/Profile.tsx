@@ -104,15 +104,12 @@ export function Profile({ detail = false }: { detail?: boolean } = {}) {
           </Reveal>
 
           <Reveal className="md:col-span-6 md:col-start-7" delay={0.08} amount={0.3}>
-            {/* Facts only. No description of her appearance and no guesses
-                about what she likes: neither is something a source states. */}
-            <p className="max-w-[54ch] text-base leading-relaxed text-fg-muted md:text-lg">
-              Bio resminya menyebut ID/EN VTuber dengan model Live 2D.
-              Delapan upload terakhir di feed berjarak enam hari, dua di
-              antaranya dari seri Until Then.
-            </p>
-
-            <StaggerGroup className="mt-10 grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-3">
+            {/*
+              Facts only, as a grid rather than a paragraph. No description of her
+              appearance and no guesses about what she likes: neither is something
+              a source states.
+            */}
+            <StaggerGroup className="grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-3">
               <StaggerItem className="bg-surface p-5">
                 <p className="text-xs font-medium uppercase tracking-[0.12em] text-fg-subtle">
                   Bahasa
