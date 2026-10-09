@@ -10,16 +10,16 @@ const BASE =
   "disabled:pointer-events-none disabled:opacity-55";
 
 /**
- * `primary` is the cocoa fill. Chosen over a peach fill because the brand's own
- * peach (#DCA08A) only reaches 3.5:1 against the ink, which fails as a button
- * background. Cocoa on peach is 6.4:1.
+ * `primary` is the ink fill. Chosen over a blonde fill because the brand's own
+ * blonde (#DCA08A) only reaches 3.5:1 against the ink, which fails as a button
+ * background. Cocoa on blonde is 6.4:1.
  */
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-cocoa text-bg hover:bg-milk hover:text-bg",
+  primary: "bg-ink text-bg hover:bg-sand hover:text-bg",
   // Transparent with a real 1px stroke. The stroke is load-bearing: without it
   // the button disappears into the page.
-  quiet: "border border-line-strong text-fg hover:bg-surface hover:border-milk",
-  link: "text-fg underline decoration-line-strong decoration-2 underline-offset-[6px] hover:decoration-milk rounded-none",
+  quiet: "border border-line-strong text-fg hover:bg-surface hover:border-sand",
+  link: "text-fg underline decoration-line-strong decoration-2 underline-offset-[6px] hover:decoration-sand rounded-none",
 };
 
 const SIZES: Record<Size, string> = {

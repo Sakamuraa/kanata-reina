@@ -1,9 +1,9 @@
 {
-  "name": "mizu-hamzazu",
+  "name": "kanata-reina",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Situs perkenalan identitas VTuber MizuHamzazu.",
+  "description": "Situs perkenalan identitas VTuber Kanata Reina.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -12,8 +12,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@fontsource-variable/karla": "^5.3.0",
-    "@fontsource-variable/petrona": "^5.3.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/outfit": "^5.3.0",
     "@phosphor-icons/react": "^2.1.7",
     "motion": "^11.15.0",
     "react": "^18.3.1",

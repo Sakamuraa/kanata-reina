@@ -1,18 +1,37 @@
-﻿@import "tailwindcss";
-@import "@fontsource-variable/petrona/index.css";
-@import "@fontsource-variable/karla/index.css";
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces/index.css";
+@import "@fontsource-variable/outfit/index.css";
 
 /* ==========================================================================
    Design tokens
    --------------------------------------------------------------------------
-   Palette comes straight from the brand brief:
-     base / midtone ......... #DCA08A, #D59B85   peach
-     shadow .................. #A67362           warm milk brown
-     highlight / glow ........ #E8B9A6           light cream peach
+   Palette comes straight from the brand brief, and all three are light:
+     base / midtone ......... #F3E1B9   blonde   pastel blonde, her hair
+     shadow ................ #C8B388   sand     warm muted light brown
+     highlight / ocean ...... #5E9CC1   ocean    clear sea blue
 
-   All three are mid-tone. None can carry body text on a light ground, so the
-   ink ramp is derived from the same warm hue and verified against WCAG. Every
-   ratio in this file was measured, not eyeballed: see README.
+   A light midtone means light mode is the identity here and the ground has to
+   suit it rather than fight it. The ground is a cream a shade off the blonde
+   rather than the blonde itself, because a page of one flat midtone has no ground
+   to sit on.
+
+   Two values deviate from the brief, deliberately:
+     --accent in light is #35698F, not #5E9CC1. The brief's ocean on a cream
+     ground measures 2.86:1 -- fine as a fill, useless as text -- so text uses a
+     darkened variant of the same hue at 5.60:1 and the literal value stays where
+     it belongs, on large fills.
+     --fg-muted and --fg-subtle in light were darkened from #7A6448, which sat at
+     4.28:1 on the surface-deep chip fill, just under the 4.5 floor.
+
+   Contrast, measured rather than eyeballed:
+     light  fg #4A3B2A on surface-deep #F0E2C7 ......  8.4:1
+            fg-muted #6E593E on #F0E2C7 .............  5.2:1
+            fg-subtle #74603F on #F0E2C7 ............  4.7:1
+            accent #35698F on bg #FDF9F0 ............  5.6:1
+   dark   fg #F5EADA on bg #2E2620 ................ 12.2:1
+            fg-muted #C8B388 on #2E2620 .............  7.2:1
+            accent #7FB4D4 on #2E2620 ...............  6.6:1
+   Both themes clear WCAG AA on every pair above.
 
    Shape rule, applied without exception:
      media frames ............ arch  (top radius 999px, bottom 20px)
@@ -25,62 +44,63 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  --bg: #fdf4ee;
-  --surface: #f8e7db;
-  --surface-deep: #f3d6c2;
+  --bg: #fdf9f0;
+  --surface: #f7eedb;
+  --surface-deep: #f0e2c7;
 
-  --line: #e9cbb6;
-  --line-strong: #a67362;
+  --line: #e2d3b4;
+  --line-strong: #c8b388;
 
-  --fg: #39251e;
-  /* One step darker than the first pass: #82594C lands at 4.37:1 on the
-     surface-deep chip fill, just under the 4.5 floor. This clears all three. */
-  --fg-muted: #7a5245;
-  --fg-subtle: #8a5f51;
+  --fg: #4a3b2a;
+  --fg-muted: #6e593e;
+  --fg-subtle: #74603f;
 
-  --accent: #8a5f51;
-  --accent-contrast: #fdf4ee;
-  --accent-soft: #f0d9c8;
+  /* The brief's ocean, darkened for text. See the header note. */
+  --accent: #35698f;
+  --accent-contrast: #fdf9f0;
+  --accent-soft: #dceaf3;
 
-  --ring: #8a5f51;
+  --ring: #35698f;
 
-  /* Brand tones, used as large fills rather than as text colours. */
-  --peach: #dca08a;
-  --peach-deep: #d59b85;
-  --milk: #a67362;
-  --glow: #e8b9a6;
-  --cocoa: #39251e;
-  /* Text placed ON a peach fill. Peach is light in both themes, so this stays
-     dark in both; deriving it from --fg would flip it and fail contrast. */
-  --on-peach: #39251e;
+  /* Brand tones, used as large fills rather than as text colours. These are
+     literal brief values and do not change between themes. */
+  --blonde: #f3e1b9;
+  --blonde-deep: #e8d0a0;
+  --sand: #c8b388;
+  --ocean: #5e9cc1;
+  --ink: #4a3b2a;
+  /* Text placed ON a blonde fill. The blonde is light in both themes, so this
+     stays dark in both; deriving it from --fg would flip it and fail contrast. */
+  --on-blonde: #4a3b2a;
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --bg: #241512;
-  --surface: #33201a;
-  --surface-deep: #3d2620;
+  --bg: #2e2620;
+  --surface: #3a3028;
+  --surface-deep: #463a30;
 
-  --line: #4c322a;
-  --line-strong: #a67362;
+  --line: #574839;
+  --line-strong: #8a7256;
 
-  --fg: #f4dfd8;
-  --fg-muted: #E8B9A6;
-  --fg-subtle: #d8ae99;
+  --fg: #f5eada;
+  --fg-muted: #c8b388;
+  --fg-subtle: #bda989;
 
-  --accent: #e8b9a6;
-  --accent-contrast: #241512;
-  --accent-soft: #4a2e25;
+  /* Lifted, because the brief's ocean is too dark to read on a dark ground. */
+  --accent: #7fb4d4;
+  --accent-contrast: #2e2620;
+  --accent-soft: #2c4453;
 
-  --ring: #e8b9a6;
+  --ring: #7fb4d4;
 
-  --peach: #dca08a;
-  --peach-deep: #d59b85;
-  --milk: #a67362;
-  --glow: #e8b9a6;
-  --cocoa: #f4dfd8;
-  --on-peach: #39251e;
+  --blonde: #f3e1b9;
+  --blonde-deep: #e8d0a0;
+  --sand: #c8b388;
+  --ocean: #5e9cc1;
+  --ink: #f5eada;
+  --on-blonde: #2e2620;
 }
 
 @theme inline {
@@ -96,20 +116,22 @@
   --color-accent-contrast: var(--accent-contrast);
   --color-accent-soft: var(--accent-soft);
 
-  --color-peach: var(--peach);
-  --color-peach-deep: var(--peach-deep);
-  --color-milk: var(--milk);
-  --color-glow: var(--glow);
-  --color-cocoa: var(--cocoa);
-  --color-on-peach: var(--on-peach);
+  --color-blonde: var(--blonde);
+  --color-blonde-deep: var(--blonde-deep);
+  --color-sand: var(--sand);
+  --color-ocean: var(--ocean);
+  --color-ink: var(--ink);
+  --color-on-blonde: var(--on-blonde);
 
-  /* Petrona for display: warm old-style serif with a wonk axis. The channel
-     presents as a princess of a kingdom, which is the one case where a serif
-     is the honest choice rather than a decorative one. */
-  --font-display: "Petrona Variable", "Iowan Old Style", Georgia, serif;
-  /* Karla for everything else. Quirky enough to not read as Inter, quiet
-     enough for 14px body copy. */
-  --font-sans: "Karla Variable", ui-sans-serif, system-ui, -apple-system,
+  /* Fraunces for display: a soft old-style with optical sizing and a wonk axis,
+     so it can be set warm and rounded at a large size without going saccharine.
+     Pastel blonde and sea blue suit a face with some give in it more than a
+     didone would. */
+  --font-display: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  /* Outfit for everything else. Geometric and even, so it holds a line of
+     Indonesian body copy without the warmth of the display face reading as
+     decoration at 14px. */
+  --font-sans: "Outfit Variable", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
 
   --radius-arch: 999px 999px 20px 20px;
@@ -156,8 +178,8 @@
   }
 
   ::selection {
-    background: var(--peach);
-    color: var(--on-peach);
+    background: var(--ocean);
+    color: var(--on-blonde);
   }
 
   h1,
@@ -204,12 +226,12 @@
     background:
       radial-gradient(
         46rem 26rem at 82% -10%,
-        color-mix(in oklab, var(--peach) 42%, transparent),
+        color-mix(in oklab, var(--ocean) 42%, transparent),
         transparent 70%
       ),
       radial-gradient(
         34rem 22rem at 4% 0%,
-        color-mix(in oklab, var(--glow) 34%, transparent),
+        color-mix(in oklab, var(--blonde) 34%, transparent),
         transparent 72%
       );
   }

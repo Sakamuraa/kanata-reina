@@ -1,4 +1,4 @@
-﻿import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 import { ActionLink } from "@/components/Action";
 import { XMark, YoutubeMark } from "@/components/ChannelIcons";
@@ -65,7 +65,7 @@ export function Hero() {
             className="overflow-hidden rounded-arch border border-line-strong bg-surface-deep"
             style={{
               boxShadow:
-                "0 24px 60px -28px color-mix(in oklab, var(--milk) 60%, transparent)",
+                "0 24px 60px -28px color-mix(in oklab, var(--sand) 60%, transparent)",
             }}
           >
             <img
@@ -82,7 +82,7 @@ export function Hero() {
             />
           </div>
           <figcaption className="mt-4 text-sm text-fg-subtle">
-            Fan art dari channel. Gambar milik kreator.
+            Foto profil dari kanal YouTube. Gambar milik kreator.
           </figcaption>
         </motion.figure>
       </div>

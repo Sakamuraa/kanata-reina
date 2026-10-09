@@ -1,8 +1,8 @@
-﻿import { Moon, Sun } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { Moon, Sun } from "@phosphor-icons/react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { ActionLink } from "@/components/Action";
-import { HeartMark, XMark, YoutubeMark } from "@/components/ChannelIcons";
+import { XMark, YoutubeMark } from "@/components/ChannelIcons";
 import { channels, navigation, site, type Route } from "@/content/site";
 import { asset } from "@/lib/paths";
 import { useTheme } from "@/lib/useTheme";
@@ -84,7 +84,7 @@ export function Nav({
               height={32}
               className="size-8 rounded-pill object-cover"
             />
-            <span>Mizu Hamzazu</span>
+            <span>Reina Reina</span>
           </a>
 
           <nav aria-label="Bagian halaman" className="hidden md:block">
@@ -152,26 +152,27 @@ export function Nav({
 
 /** Footer row of channel links, same treatment as the nav. */
 export function ChannelButtons() {
-  const items = [
-    {
-      label: channels.youtube.label,
-      handle: channels.youtube.handle,
-      url: channels.youtube.url,
-      icon: <YoutubeMark size={18} />,
-    },
-    {
-      label: channels.x.label,
-      handle: channels.x.handle,
-      url: channels.x.url,
-      icon: <XMark size={18} />,
-    },
-    {
-      label: channels.trakteer.label,
-      handle: channels.trakteer.handle,
-      url: channels.trakteer.url,
-      icon: <HeartMark size={18} />,
-    },
-  ];
+  /*
+   * Generated from the channel table rather than listed out. This used to be a
+   * hand-built array of three, which meant the footer and the /channel page could
+   * disagree about which channels she has -- and they already did, once.
+   *
+   * Only the two with a brand mark get one. Phosphor ships no Facebook,
+   * Instagram or TikTok logo, and reaching for a generic glyph on all three would
+   * be decoration pretending to be recognition. Those render as the wordmark
+   * alone, which is also what a footer this size wants.
+   */
+  const icons: Partial<Record<keyof typeof channels, ReactNode>> = {
+    youtube: <YoutubeMark size={18} />,
+    x: <XMark size={18} />,
+  };
+
+  const items = (Object.keys(channels) as (keyof typeof channels)[]).map((key) => ({
+    key,
+    label: channels[key].label,
+    url: channels[key].url,
+    icon: icons[key],
+  }));
 
   return (
     <ul className="flex flex-wrap items-center gap-2">

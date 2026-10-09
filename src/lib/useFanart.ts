@@ -109,7 +109,7 @@ export function useFanart(): State & { loadMore: () => void } {
   const [state, setState] = useState<State>({
     fanart: [],
     reason: "loading",
-    searchUrl: "https://x.com/search?q=%23ForMizu&src=typed_query&f=live",
+    searchUrl: "https://x.com/search?q=%23ReinaGambar&src=typed_query&f=live",
     nextCursor: null,
     loadingMore: false,
     initialCount: 0,

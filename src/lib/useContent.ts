@@ -42,7 +42,7 @@ type State = {
 };
 
 /** When the snapshot's ages were measured, so the client can keep them honest. */
-const SNAPSHOT_AT = "2026-10-08T05:49:31.714Z";
+const SNAPSHOT_AT = "2026-10-09T16:16:37.298Z";
 
 /**
  * Bundled copies of the three lists, taken 2026-10-08.
@@ -54,52 +54,61 @@ const SNAPSHOT_AT = "2026-10-08T05:49:31.714Z";
  * the page that can go stale with no server to refresh it.
  */
 const SNAPSHOT_STREAMS: ContentItem[] = [
-  { videoId: "S6PD4T8H4Cw", url: "https://www.youtube.com/watch?v=S6PD4T8H4Cw", title: "『UNTIL THEN』kelanjutan setelah ketemu anak baru", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "bgnGUHwGNqs", url: "https://www.youtube.com/watch?v=bgnGUHwGNqs", title: "『KuloNiku: Bowl Up !』Pinter masak bakso = menantu idaman", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "XYDuOH8Q4-Y", url: "https://www.youtube.com/watch?v=XYDuOH8Q4-Y", title: "『RABUATIF』design apa ya tudayyy", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "8UlKFnlvo00", url: "https://www.youtube.com/watch?v=8UlKFnlvo00", title: "『UNTIL THEN』kali ini beneran main until then", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "M1ANn11KH2Q", url: "https://www.youtube.com/watch?v=M1ANn11KH2Q", title: "『PHASMOPHOBIA』nakutin atau ditakutin? ft. SilveragonAri dan RayRxyz", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "j533fLKIn4k", url: "https://www.youtube.com/watch?v=j533fLKIn4k", title: "『NOBAR』sapi-sapi apa yang nempel di dinding? sapidermen", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "618FhJnhs8g", url: "https://www.youtube.com/watch?v=618FhJnhs8g", title: "『GARTIC.IO』tebak gambar apa tebak perasaan?", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "It9c17pa3UY", url: "https://www.youtube.com/watch?v=It9c17pa3UY", title: "『Super Market Simulator』until then ngecrash", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "IcE2hD9029Q", url: "https://www.youtube.com/watch?v=IcE2hD9029Q", title: "【Pajama Night】miawwwwww", thumbnail: "", live: true, viewers: null, age: null, duration: null },
+  { videoId: "GoaipuPBR78", url: "https://www.youtube.com/watch?v=GoaipuPBR78", title: "📸ONCAM ASMR - Rainy night call 📞❤️", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "bG5EB49swso", url: "https://www.youtube.com/watch?v=bG5EB49swso", title: "REIVIEW SET UP | mana nih set up kaliaannn Part 2", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "tR880g7C6Io", url: "https://www.youtube.com/watch?v=tR880g7C6Io", title: "New Season New Me | Honor of Kings", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "JrB7bjctRdA", url: "https://www.youtube.com/watch?v=JrB7bjctRdA", title: "【Pajama Night】bentaran ajahh karna macih atit", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "BSfd7A0nKEI", url: "https://www.youtube.com/watch?v=BSfd7A0nKEI", title: "REIVIEW SET UP - mana nih set up kaliaannn", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "gqQAgb2Q5tE", url: "https://www.youtube.com/watch?v=gqQAgb2Q5tE", title: "sini Reina sembuhkan sakit hati kamu 💖💗🥰💞", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "kJheu4E6V18", url: "https://www.youtube.com/watch?v=kJheu4E6V18", title: "disuruh stream, katanya kangen padahal baru stream tadi", thumbnail: "", live: false, viewers: null, age: null, duration: null },
 ];
 
 const SNAPSHOT_VIDEOS: ContentItem[] = [
-  { videoId: "iO2_xI8y6OQ", url: "https://www.youtube.com/watch?v=iO2_xI8y6OQ", title: "Aku dan Dirimu - Cover by Mizu Hamzazu & @naplive7", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "KjhKjXLqO0s", url: "https://www.youtube.com/watch?v=KjhKjXLqO0s", title: "【ROLEPLAY】Sayang? Masih Bangun?", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "YcAqZoRfJII", url: "https://www.youtube.com/watch?v=YcAqZoRfJII", title: "Kaktus - Suara Kayu, Cover by Mizu Hamzazu", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "qkVWgPhqo7g", url: "https://www.youtube.com/watch?v=qkVWgPhqo7g", title: "Would You Be So Kind, Cover oleh Mizu Hamzazu", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "W_Ze-4gYSBU", url: "https://www.youtube.com/watch?v=W_Ze-4gYSBU", title: "Will You come to my special day?", thumbnail: "", live: false, viewers: null, age: null, duration: null },
-  { videoId: "9y7f7ntlNtY", url: "https://www.youtube.com/watch?v=9y7f7ntlNtY", title: "【ROLEPLAY】Kamu Manggil Aku Lagi, Boss?", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "gdk1QFH4uhM", url: "https://www.youtube.com/watch?v=gdk1QFH4uhM", title: "【COVER】Naykilla - SO ASU | Cover By Kanata Reina", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "xPFepd1EPjU", url: "https://www.youtube.com/watch?v=xPFepd1EPjU", title: "【COVER】Cherry Pop (チェリーポップ) - DECO*27 ft. Hatsune Miku | Cover By Kanata Reina", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "Ry19U_5oid4", url: "https://www.youtube.com/watch?v=Ry19U_5oid4", title: "【COVER】Alamak - Rizky Febian & Adrian Khalif | Cover By Kanata Reina", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "0CgZQG_36_c", url: "https://www.youtube.com/watch?v=0CgZQG_36_c", title: "【COVER】Luna Haruna - Kimiiro Signal | Cover By Kanata Reina", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "gYYIp7eKb-A", url: "https://www.youtube.com/watch?v=gYYIp7eKb-A", title: "【COVER】PASILYO - SUNKISSED LOLA | INDONESIAN VERSION - HANYA KAMU | COVER BY KANATA REINA", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "YNPxbXoLJjo", url: "https://www.youtube.com/watch?v=YNPxbXoLJjo", title: "Rating kehokian Reina dari 1-10 🥰🥰🥰", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "GH97SGrllJg", url: "https://www.youtube.com/watch?v=GH97SGrllJg", title: "【COVER】 KATAOMOI『カタオモイ』- AIMER  | COVER BY KANATA REINA", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "vTwyimREj7g", url: "https://www.youtube.com/watch?v=vTwyimREj7g", title: "Kalau mau jadi Yuki tinggal ganti wig 😎 #vtuber #vtuberindonesia #alya #vtuberclips", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "EXDIAdczLZY", url: "https://www.youtube.com/watch?v=EXDIAdczLZY", title: "【COVER】 IDOL / アイドル - YOASOBI (TV SIZE VER.) 『OSHI NO KO OPENING』 | COVER BY REINA & AMV BY DRYYYNNN", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "1PWfnJuKaHs", url: "https://www.youtube.com/watch?v=1PWfnJuKaHs", title: "Oh! Asmara - Kobo Kanaeru【Cover by. Kanata Reina】| #AsmaraUntukKobo #OhAsmara | Vtuber Cover Song", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "bDTsQuDGIrI", url: "https://www.youtube.com/watch?v=bDTsQuDGIrI", title: "Sesepuh vtuber evelyn epel memberikan tips suara bagus ke reina | #clips #vtuberclip #vtuberid", thumbnail: "", live: false, viewers: null, age: null, duration: null },
+  { videoId: "m0JxvIVwH9I", url: "https://www.youtube.com/watch?v=m0JxvIVwH9I", title: "KETIKA SEORANG VTUBER MENGATAKAN ARA-ARA SAAT GACHA, GACHANYA PASTI WANGY #clips #vtuberid #vtuber", thumbnail: "", live: false, viewers: null, age: null, duration: null },
 ];
 
 const SNAPSHOT_CLIPS: ContentItem[] = [
-  { videoId: "HX3YxahVsQY", url: "https://www.youtube.com/watch?v=HX3YxahVsQY", title: "Bang Al Buat Kak Tri Salting Gak Karuan", thumbnail: "", live: false, viewers: null, age: null, duration: null, channel: "Exile Syahputra" },
-  { videoId: "ERx7I0-inKY", url: "https://www.youtube.com/watch?v=ERx7I0-inKY", title: "Kak Tri Ngedate Bersama Bang Al Ternyata?", thumbnail: "", live: false, viewers: null, age: null, duration: null, channel: "Exile Syahputra" },
-  { videoId: "3HrLBePvVbc", url: "https://www.youtube.com/watch?v=3HrLBePvVbc", title: "Kak Tri Juga Cinta Bang Al Seperti Mizu?", thumbnail: "", live: false, viewers: null, age: null, duration: null, channel: "Exile Syahputra" },
-  { videoId: "FNDvvq3H8OU", url: "https://www.youtube.com/watch?v=FNDvvq3H8OU", title: "Mizu Aku Cinta Kamu", thumbnail: "", live: false, viewers: null, age: null, duration: null, channel: "putra clip" },
+  { videoId: "scCcAJYvN9s", url: "https://www.youtube.com/watch?v=scCcAJYvN9s", title: "Kak Reina Shock Dengan Dramok Keyboard Pemda | [ Kanata Reina ] @KanataReinaCh", thumbnail: "", live: false, viewers: null, age: null, duration: null, channel: "Zaky Koshka Ch." },
+  { videoId: "0wqvL-FT__0", url: "https://www.youtube.com/watch?v=0wqvL-FT__0", title: "Gemes Banget Frierennya [Kanata Reina Ch.]", thumbnail: "", live: false, viewers: null, age: null, duration: null, channel: "Fuutaba Clips" },
+  { videoId: "jDq-EisvULk", url: "https://www.youtube.com/watch?v=jDq-EisvULk", title: "Akhirnya Aku Menemukan My Kisah ku Guys [Kanata Reina Ch.]", thumbnail: "", live: false, viewers: null, age: null, duration: null, channel: "Fuutaba Clips" },
 ];
 
 /** Ages as measured at capture time, in seconds. */
 const SNAPSHOT_AGES: Record<string, number> = {
-  S6PD4T8H4Cw: 3600,
-  bgnGUHwGNqs: 64800,
-  "XYDuOH8Q4-Y": 86400,
-  "8UlKFnlvo00": 86400,
-  M1ANn11KH2Q: 172800,
-  j533fLKIn4k: 172800,
-  "618FhJnhs8g": 259200,
-  It9c17pa3UY: 432000,
-  iO2_xI8y6OQ: 36000,
-  KjhKjXLqO0s: 2592000,
-  YcAqZoRfJII: 2592000,
-  qkVWgPhqo7g: 5184000,
-  "W_Ze-4gYSBU": 5184000,
-  "9y7f7ntlNtY": 7776000,
-  HX3YxahVsQY: 10368000,
-  "ERx7I0-inKY": 20736000,
-  "3HrLBePvVbc": 20736000,
-  FNDvvq3H8OU: 31536000,
+  GoaipuPBR78: 82800,
+  bG5EB49swso: 172800,
+  tR880g7C6Io: 172800,
+  JrB7bjctRdA: 604800,
+  BSfd7A0nKEI: 691200,
+  gqQAgb2Q5tE: 777600,
+  kJheu4E6V18: 864000,
+  gdk1QFH4uhM: 10368000,
+  xPFepd1EPjU: 23328000,
+  Ry19U_5oid4: 23328000,
+  "0CgZQG_36_c": 28512000,
+  "gYYIp7eKb-A": 31536000,
+  YNPxbXoLJjo: 31536000,
+  GH97SGrllJg: 31536000,
+  vTwyimREj7g: 63072000,
+  EXDIAdczLZY: 94608000,
+  "1PWfnJuKaHs": 94608000,
+  bDTsQuDGIrI: 94608000,
+  m0JxvIVwH9I: 94608000,
+  scCcAJYvN9s: 15552000,
+  "0wqvL-FT__0": 31536000,
+  "jDq-EisvULk": 31536000,
 };
 
 const SECOND = 1000;

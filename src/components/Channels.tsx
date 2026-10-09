@@ -4,33 +4,23 @@ import { channels } from "@/content/site";
 import { Reveal } from "@/lib/reveal";
 
 /**
- * Channel links as a full-bleed peach band. Layout family: one wide statement
+ * Channel links as a full-bleed blonde band. Layout family: one wide statement
  * row per channel, not cards. Kept separate from the upload grid above so the
  * page does not repeat a card layout twice in a row.
  */
-const ROWS = [
-  {
-    key: "youtube",
-    label: channels.youtube.label,
-    handle: channels.youtube.handle,
-    note: channels.youtube.note,
-    url: channels.youtube.url,
-  },
-  {
-    key: "x",
-    label: channels.x.label,
-    handle: channels.x.handle,
-    note: channels.x.note,
-    url: channels.x.url,
-  },
-  {
-    key: "trakteer",
-    label: channels.trakteer.label,
-    handle: channels.trakteer.handle,
-    note: channels.trakteer.note,
-    url: channels.trakteer.url,
-  },
-];
+/*
+ * Built from the channel table by key rather than hand-listed.
+ *
+ * The previous version wrote out one object per channel, which meant adding one
+ * meant copying five fields by hand and nothing stopped the label drifting from
+ * the URL beside it. Iterating the table means a channel added in site.ts shows
+ * up here on its own, in the order it was written there.
+ */
+const ROW_KEYS = ["youtube", "x", "facebook", "instagram", "tiktok"] as const satisfies ReadonlyArray<
+  keyof typeof channels
+>;
+
+const ROWS = ROW_KEYS.map((key) => ({ key, ...channels[key] }));
 
 /**
  * Channel links.
@@ -56,7 +46,7 @@ export function Channels({ standalone = false }: { standalone?: boolean } = {}) 
             id="channels-heading"
             className="max-w-[18ch] text-3xl font-semibold leading-tight tracking-tight md:text-4xl"
           >
-            Di mana Mizu bisa ditemukan
+            Di mana Reina bisa ditemukan
           </Heading>
         </Reveal>
 

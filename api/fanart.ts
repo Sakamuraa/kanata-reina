@@ -77,7 +77,7 @@ interface FanartResponse {
  */
 const INSTANCES = ["https://nitter1.kabii.moe", "https://nitter.kabii.moe"] as const;
 
-const HASHTAG = "formizu";
+const HASHTAG = "reinagambar";
 const QUERY = `%23${HASHTAG}`;
 
 const UA =

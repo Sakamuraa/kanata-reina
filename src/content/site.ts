@@ -4,9 +4,9 @@
  * Provenance, so nothing here has to be trusted on faith:
  *   - name, bio ................. YouTube channel description + X profile bio
  *   - avatar .................... yt3.googleusercontent.com (channel avatar)
- *   - join date ................. channel /about page, "Bergabung pada 17 Jul 2021"
- *   - character credits ......... the creator's own X bio
- *   - hashtags .................. the channel description, in her order
+ *   - join date ................. X profile, "Joined October 2022"
+ *   - credits ................... the creator's own X bio
+ *   - hashtags .................. the creator's own list
  *   - series .................... counted from the feed titles
  *
  * The content lists are NOT here. They come from /api/content at request time
@@ -15,48 +15,82 @@
  */
 
 export const site = {
-  name: "Mizu Hamzazu",
+  name: "Kanata Reina",
   /** Name as it appears on the channel, verbatim. */
-  channelTitle: "Mizu Hamzazu Ch.",
-  /** Description as published by the creator, trimmed of decoration. */
-  bio: "Hamster Princess, ID/EN VTuber. Salah satu putri dari kerajaan Hamzazu.",
+  channelTitle: "Kanata Reina Ch.",
+  /**
+   * Her own description, kept close to what she publishes.
+   *
+   * The channel description reads "Virtual Youtuber Indonesia / LOVE WITCH /
+   * Kanata Reina". The second line is a tag she uses for herself rather than a
+   * sentence, so it is left as the tag it is instead of being expanded into
+   * something she did not write. Her X bio is the other half: a family act,
+   * commissions, and the art hashtag.
+   */
+  bio: "Virtual YouTuber Indonesia. Isekai, love witch, dan suka live bareng.",
   /**
    * Production origin. The site is served from its own subdomain, so the origin
    * and the site URL are the same thing. Kept in sync with index.html,
    * robots.txt, and sitemap.xml.
    */
-  url: "https://mizuhamzazu.vtube-info.xyz",
+  url: "https://kanatareina.vtube-info.xyz",
   locale: "id_ID",
   avatar: "/media/avatar-youtube.webp",
-  avatarAlt: "Ilustrasi Mizu Hamzazu: karakter anime berwarna rambut peach memakai mahkota emas",
+  /**
+   * Alt text for the channel avatar.
+   *
+   * Deliberately does not describe the picture. The artwork is hers and any
+   * description here would be invented rather than read off it, which serves a
+   * screen reader worse than naming what the image is for.
+   */
+  avatarAlt: "Avatar kanal YouTube Kanata Reina",
   /** Smaller crop used for the nav mark, where the square version is too heavy. */
   avatarSmall: "/media/avatar-x.webp",
-  joined: "Bergabung pada Juli 2021",
-  /** Character work credits, from the creator's own X bio. */
+  joined: "Bergabung di X sejak Oktober 2022",
+  /**
+   * People she names herself, from her own X bio.
+   *
+   * She writes them as ママ and パパ -- mother and father -- which is how the
+   * account presents: a family of characters rather than a solo act. Recorded as
+   * "Mama" and "Papa" so the page keeps the relationship she chose, and the
+   * Japanese stays in the bio on /tentang where it is her wording.
+   */
   credits: [
-    { role: "Model Live 2D", name: "@ardisketch_2d" },
-    { role: "Rig", name: "@Gromb5" },
+    { role: "Mama", name: "@arthronoAicent" },
+    { role: "Papa", name: "@aerixderune" },
   ],
 } as const;
 
 export const channels = {
   youtube: {
     label: "YouTube",
-    handle: "@MizuHamzazu",
-    url: "https://www.youtube.com/@MizuHamzazu",
-    note: "Stream dan klip",
+    handle: "@KanataReinaCh",
+    url: "https://www.youtube.com/@KanataReinaCh",
+    note: "Cover dan live",
   },
   x: {
     label: "X",
-    handle: "@mizuhamzazu",
-    url: "https://x.com/mizuhamzazu",
-    note: "Update harian",
+    handle: "@Kanata_Reina",
+    url: "https://x.com/Kanata_Reina",
+    note: "Jadwal live dan harian",
   },
-  trakteer: {
-    label: "Trakteer",
-    handle: "trakteer.id/MizuHamzazu",
-    url: "https://trakteer.id/MizuHamzazu/gift",
-    note: "Support lewat gift",
+  facebook: {
+    label: "Facebook",
+    handle: "KanataReina",
+    url: "https://www.facebook.com/KanataReina",
+    note: "Konten dan pengumuman",
+  },
+  instagram: {
+    label: "Instagram",
+    handle: "@kanata_reina",
+    url: "https://www.instagram.com/kanata_reina",
+    note: "Foto dan story",
+  },
+  tiktok: {
+    label: "TikTok",
+    handle: "@kanatareina",
+    url: "https://www.tiktok.com/@kanatareina",
+    note: "Clip pendek",
   },
 } as const;
 
@@ -82,10 +116,12 @@ export type Route = (typeof ROUTES)[number];
 
 /** The creator's own hashtags, in the order the channel description lists them. */
 export const hashtags = [
-  { tag: "#MizuHammu", use: "General" },
-  { tag: "#Mizuislive", use: "Live" },
-  { tag: "#Mizungelag", use: "Meme" },
-  { tag: "#forMizu", use: "Art" },
+  { tag: "#kanatareina", use: "General" },
+  { tag: "#ReinaGaming", use: "Gaming" },
+  { tag: "#ReinaFreetalk", use: "Freetalk" },
+  { tag: "#ReinaFanart", use: "Fan Art" },
+  { tag: "#ReinaRandom", use: "Random" },
+  { tag: "#ReinaKaraoke", use: "Karaoke" },
 ] as const;
 
 /**
@@ -94,12 +130,10 @@ export const hashtags = [
  * from the creator.
  */
 export const series = [
-  { name: "Until Then", kind: "Game" },
-  { name: "Morning Stream", kind: "Ngobrol" },
-  { name: "Phasmophobia", kind: "Game" },
-  { name: "Gartic.io", kind: "Game" },
-  { name: "Super Market Simulator", kind: "Game" },
-  { name: "Freetalk", kind: "Ngobrol" },
+  { name: "COVER", kind: "Cover" },
+  { name: "Pajama Night", kind: "Obrolan" },
+  { name: "REIVIEW SET UP", kind: "Review" },
+  { name: "ONCAM ASMR", kind: "ASMR" },
 ] as const;
 
 /**
