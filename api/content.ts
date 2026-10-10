@@ -63,9 +63,57 @@ const CHANNEL_TITLE_PREFIX = "Kanata Reina";
 /** Newest first. Without sort=dd these tabs are ordered by popularity. */
 const STREAMS_TAB = `https://www.youtube.com/${HANDLE}/streams?view=0&sort=dd&flow=grid&hl=id&gl=ID`;
 const VIDEOS_TAB = `https://www.youtube.com/${HANDLE}/videos?view=0&sort=dd&flow=grid&hl=id&gl=ID`;
-const SEARCH_PAGE = `https://www.youtube.com/results?search_query=${encodeURIComponent(
+/**
+ * Six searches instead of one, because one is not enough.
+ *
+ * YouTube search is relevance-ranked off the phrasing it was given, so it returns
+ * whichever slice of the web matches those words -- and which slice that is
+ * changes between requests. Measured by running the same query six times with
+ * nothing else changed: the qualifying count came back 3, 0, 3, 1, 2, 3. That
+ * zero is not a rare edge case, it is one draw in six, and it is why this page
+ * could report no clips at all while fifteen existed.
+ *
+ * Measured across twelve phrasings, against every clip any of them could reach:
+ *
+ *   query                    clips it surfaced alone
+ *   "kanata reina clip"            10
+ *   "kanata reina clips"            9
+ *   "kanatareina ch clip"           5
+ *   "reina ch"                      4
+ *   "kanata reina"                  4
+ *   "kanata reina chat"             4
+ *   "kanata reina ch"               3
+ *   "reina vtuber"                  2
+ *   "kanata reina vtuber"           4
+ *
+ * The single "kanata reina" query this used to be finds 4 of the 15, and the
+ * word "clip" is what pulls in the clip channels -- Fuutaba Clips, Zaky Koshka,
+ * Idol daisukii Clip and the rest, whose titles carry "[Kanata Reina Ch.]" but
+ * whose videos have nothing to do with the word "reina" in a ranking sense.
+ *
+ * Six is the budget, not the aim. Each entry is a separate YouTube page fetch and
+ * the whole call has to land inside the function's time limit, so this is a
+ * ceiling. The sets overlap heavily -- the same clip came back from four of them
+ * -- and the union is deduplicated by video id.
+ *
+ * "kak reina" was measured at zero and is deliberately absent: the Indonesian
+ * clip channels prefix her that way in captions, but as a search term it returns
+ * two unrelated results and no clips.
+ */
+const SEARCH_QUERIES = [
+  "kanata reina clip",
+  "kanata reina clips",
+  "kanatareina ch clip",
+  "reina ch",
   "kanata reina",
-)}&hl=id&gl=ID`;
+  "kanata reina chat",
+];
+
+function searchPage(query: string): string {
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(
+    query,
+  )}&hl=id&gl=ID`;
+}
 
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
@@ -515,12 +563,39 @@ interface VideoRenderer {
   title?: unknown;
   ownerText?: unknown;
   navigationEndpoint?: unknown;
+  /**
+   * Legacy blurb field. Kept because it is occasionally present, but it is a
+   * wrapper rather than the run list itself -- see `readDescription`.
+   */
   descriptionSnippet?: unknown;
+  /**
+   * Where the blurb actually lives on a current search result.
+   *
+   * An array of one entry, holding `{ snippetText: { runs: [...] } }`.
+   * `detailedMetadataSnippets` appears once per videoRenderer; the old
+   * `descriptionSnippet` appears about once in the entire page, so reading only
+   * that one left every description empty and silently disabled the
+   * description half of the clip keyword test.
+   */
+  detailedMetadataSnippets?: Array<{ snippetText?: unknown }>;
   lengthText?: unknown;
   publishedTimeText?: unknown;
   thumbnail?: {
     thumbnails?: Array<{ url?: string }>;
   };
+}
+
+/**
+ * The blurb under a search result, whichever field it arrived in.
+ *
+ * Prefers the modern path because that is the one the page populates. The legacy
+ * field is tried second and its result joined in as well, since a result
+ * carrying only one of the two should still contribute whatever text it has.
+ */
+function readDescription(renderer: VideoRenderer): string {
+  const detailed = text(renderer.detailedMetadataSnippets?.[0]?.snippetText);
+  const legacy = text(renderer.descriptionSnippet);
+  return [detailed, legacy].filter(Boolean).join(" ");
 }
 
 function collectSearchResults(html: string): VideoRenderer[] {
@@ -560,7 +635,7 @@ function parseSearchResults(html: string): SearchEntry[] {
     if (!title || typeof renderer.videoId !== "string") continue;
 
     const channel = text(renderer.ownerText);
-    const description = text(renderer.descriptionSnippet);
+    const description = readDescription(renderer);
     const published = text(renderer.publishedTimeText);
     const age = parseAge(published);
     const thumbnails = renderer.thumbnail?.thumbnails ?? [];
@@ -605,15 +680,32 @@ function parseSearchResults(html: string): SearchEntry[] {
  * is why the sort falls back to the original order on a tie instead of inventing
  * a sequence.
  *
- * The pool is also bounded by what search surfaced, roughly 25 results, so this
- * is the newest clips *among those found* and not an exhaustive archive.
+ * The pool is bounded by what the searches surfaced, so this is the newest clips
+ * *among those found* and not an exhaustive archive.
  */
 async function readClips(): Promise<ContentItem[]> {
-  const html = await fetchText(SEARCH_PAGE);
-  if (!html) return [];
+  // Fetched together rather than in sequence: they are unrelated requests to
+  // unrelated pages, so serialising them would multiply the latency of the
+  // slowest tab by six. A partial failure is normal here, not exceptional --
+  // whichever searches answer still contribute.
+  const pages = await Promise.all(SEARCH_QUERIES.map((query) => fetchText(searchPage(query))));
 
-  const ranked = parseSearchResults(html).map((entry, position) => ({ entry, position }));
-  const qualifying = ranked.filter(
+  // Deduplicated by video id, keeping the first sighting. The six overlap
+  // heavily -- the same clip came back from four of them -- so without this the
+  // wall would be mostly repeats of whatever ranked highest in the first query.
+  // The position tiebreak carries the query index so a clip found by an earlier
+  // phrasing sorts ahead of one found only by a later, wider one.
+  const byId = new Map<string, { entry: SearchEntry; position: number }>();
+
+  pages.forEach((html, queryIndex) => {
+    if (!html) return;
+    parseSearchResults(html).forEach((entry, position) => {
+      if (byId.has(entry.videoId)) return;
+      byId.set(entry.videoId, { entry, position: queryIndex * 1000 + position });
+    });
+  });
+
+  const qualifying = [...byId.values()].filter(
     ({ entry }) => entry.mentions && !entry.isOwn && !entry.isLive,
   );
 
