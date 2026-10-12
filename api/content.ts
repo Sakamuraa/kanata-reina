@@ -257,7 +257,12 @@ async function fetchText(url: string): Promise<string | null> {
       headers: {
         "user-agent": UA,
         "accept-language": "id-ID,id;q=0.9",
-        cookie: "CONSENT=YES+cb.20210328-17-p0.en+FX+100",
+        // CONSENT skips the EU interstitial; PREF=tz pins the timezone every
+        // rendered time is shown in. We force UTC so the grid's scheduled-stream
+        // label ("Tayang DD/MM/YY, HH.MM") is always UTC and parses to an exact
+        // instant -- otherwise YouTube renders it in the request IP's zone (US
+        // Pacific from Vercel), which is ambiguous across PDT/PST and DST.
+        cookie: "CONSENT=YES+cb.20210328-17-p0.en+FX+100; PREF=tz=Etc.UTC",
       },
       signal: controller.signal,
     });
@@ -268,6 +273,24 @@ async function fetchText(url: string): Promise<string | null> {
   } finally {
     clearTimeout(timer);
   }
+}
+
+/**
+ * The grid's scheduled-stream label as a unix instant (seconds), or null.
+ *
+ * YouTube gives no machine start time in the channel grid -- only a localised
+ * "Tayang DD/MM/YY, HH.MM" string. Because fetchText pins the request timezone
+ * to UTC (PREF=tz=Etc.UTC), that string is unambiguously UTC here, so we parse
+ * it as UTC and never guess an offset. Gated on the "Tayang" label so a finished
+ * video's relative age ("2 hari lalu") can't be mistaken for a schedule.
+ */
+function parseScheduledUtc(json: string): number | null {
+  if (!/Tayang/.test(json)) return null;
+  const m = json.match(/(\d{1,2})\/(\d{1,2})\/(\d{2}),\s*(\d{1,2})\.(\d{2})/);
+  if (!m) return null;
+  const [, d, mo, y, h, mi] = m.map(Number);
+  const unix = Math.floor(Date.UTC(2000 + y, mo - 1, d, h, mi) / 1000);
+  return Number.isFinite(unix) ? unix : null;
 }
 
 function plainText(node: unknown): string | null {
@@ -432,15 +455,13 @@ function parseLockups(html: string): LockupEntry[] {
     const age = ageLine ? parseAge(ageLine) : null;
     const sources = thumbnail?.image?.sources ?? [];
 
-    // Scheduled start, when YouTube carries it in this lockup grid (unix secs;
-    // 10-13 digits -> normalise to seconds). The channel grid survives the
-    // datacenter IP even though the watch page does not. Null when absent.
-    const startMatch = JSON.stringify(lockup).match(/"startTime":"(\d{10,13})"/);
-    const scheduledStart = startMatch
-      ? Number(startMatch[1]) > 1e12
-        ? Math.floor(Number(startMatch[1]) / 1000)
-        : Number(startMatch[1])
-      : null;
+    // Scheduled start, as an exact unix instant. The modern channel grid carries
+    // no machine start time -- only a localised "Tayang DD/MM/YY, HH.MM" label.
+    // fetchText pins the request timezone to UTC (PREF=tz=Etc.UTC), so that label
+    // is always UTC here and parses cleanly (verified equal to the watch page's
+    // scheduledStartTime). The machine time itself lives only on the bot-walled
+    // watch page, so this label is the one scheduling signal Vercel can read.
+    const scheduledStart = parseScheduledUtc(JSON.stringify(lockup));
 
     entries.push({
       videoId,
